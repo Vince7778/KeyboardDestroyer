@@ -205,5 +205,5 @@ let qwerty = new Keyboard([
     [new Key("Tab", "Tab", 8), new Key("Q"), new Key("W"), new Key("E"), new Key("R"), new Key("T"), new Key("Y"), new Key("U"), new Key("I"), new Key("O"), new Key("P"), new Key("[", "BracketLeft"), new Key("]", "BracketRight"), new Key("\\", "Backslash")],
     [new Key("Caps", "CapsLock", 9), new Key("A"), new Key("S"), new Key("D"), new Key("F"), new Key("G"), new Key("H"), new Key("J"), new Key("K"), new Key("L"), new Key(";", "Semicolon"), new Key("'", "Quote"), new Key("Enter", "Enter", 10)],
     [new Key("Shift", "ShiftLeft", 12), new Key("Z"), new Key("X"), new Key("C"), new Key("V"), new Key("B"), new Key("N"), new Key("M"), new Key(",", "Comma"), new Key(".", "Period"), new Key("/", "Slash"), new Key("Shift", "ShiftRight", 13)],
-    [new Key("Ctrl", "ControlLeft", 9), new Key("Win", "OSLeft", 5), new Key("Alt", "AltLeft", 5), new Key("Space", "Space", 29), new Key("Alt", "AltRight", 5), new Key("Ctrl", "ControlRight", 10), new Key("<", "ArrowLeft"), new Key("^\nv", "ArrowUp"), new Key(">", "ArrowRight")]
+    [new Key("Ctrl", "ControlLeft", 9), new Key("Alt", "AltLeft", 8), new Key("Space", "Space", 29), new Key("Alt", "AltRight", 8), new Key("Ctrl", "ControlRight", 10), new Key("<", "ArrowLeft"), new Key("^\nv", "ArrowUp"), new Key(">", "ArrowRight")]
 ], 30);
