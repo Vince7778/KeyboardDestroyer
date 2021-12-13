@@ -108,7 +108,7 @@ class Keyboard {
                     for (let p = 0; p < 5; p++) {
                         spawnRandomParticle(0.5, midPt, Math.random()*100+100);
                     }
-                    addShake(3, 0.2, true);
+                    addShake(5, 0.2, true);
                     this.keysPressed++;
                 }
             });
