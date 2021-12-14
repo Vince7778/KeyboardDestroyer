@@ -24,6 +24,7 @@ let scale = 60/1500*canvas.width;
 let numBroken = 0;
 let fastestTime = 1e99;
 let indestructible = false;
+let showParticles = true;
 
 function draw() {
     frameCount++;
@@ -63,8 +64,10 @@ function draw() {
     splitKeyboards.forEach(k => k.tick(dt));
     splitKeyboards.forEach(k => k.drawSplit(ctx));
 
-    tickAllParticles(dt);
-    drawAllParticles(ctx, scale);
+    if (showParticles) {
+        tickAllParticles(dt);
+        drawAllParticles(ctx, scale);
+    }
     ctx.translate(-canvas.width/2 + activeKeyboard.calcWidth()/2*scale/5, -canvas.height/2 + activeKeyboard.calcHeight()/2*scale/5);
 
     ctx.translate(...shake.map(v => -v));

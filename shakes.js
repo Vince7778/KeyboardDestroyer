@@ -26,12 +26,13 @@ function tickShake(dt) {
 let lastShake = [0, 0];
 let lastShakeTime = new Date();
 const shakeThreshold = 1/60;
+let shakeSize = 1;
 
 function getShake(curTime, scale) {
     if (curTime - lastShakeTime < shakeThreshold*1000) return lastShake;
     if (shakes.length === 0) return [0, 0];
 
-    let magSum = shakes.reduce((v, c) => v+c.getMag(), 0) * scale/60;
+    let magSum = shakes.reduce((v, c) => v+c.getMag(), 0) * scale/60 * shakeSize;
     let angle = Math.random()*2*Math.PI;
     let shake = [magSum*Math.cos(angle), magSum*Math.sin(angle)];
 
