@@ -57,7 +57,7 @@ function draw() {
 
     tickAllParticles(dt);
     drawAllParticles(ctx, scale);
-    ctx.translate(-100, -100);
+    ctx.translate(-canvas.width/2 + activeKeyboard.calcWidth()/2*scale/5, -canvas.height/2 + activeKeyboard.calcHeight()/2*scale/5);
 
     ctx.translate(...shake.map(v => -v));
     
