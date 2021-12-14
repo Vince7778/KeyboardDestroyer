@@ -3,6 +3,15 @@
 
 let KEY_RESET_RATIO = 0.5;
 const MAX_VEL = 500;
+let coloredKeyboards = false;
+
+function getRandomColor() {
+    return [0,0,0].map(() => Math.floor(Math.random()*256));
+}
+
+function colorStr(arr) {
+    return `rgb(${arr[0]}, ${arr[1]}, ${arr[2]})`;
+}
 
 class Key {
     constructor(key, keyCode, width, disabled) {
@@ -13,9 +22,9 @@ class Key {
         this.startActive = !disabled;
     }
 
-    draw(ctx, scale) {
+    draw(ctx, scale, color="#222222") {
         if (!this.active) return;
-        ctx.fillStyle = "#222222";
+        ctx.fillStyle = color;
         ctx.fillRect(0, 0, scale*this.width/5, scale);
 
         ctx.fillStyle = "#FFFFFF";
@@ -30,7 +39,7 @@ class Key {
     }
 
     press() {
-        this.active = false;
+        if (!indestructible) this.active = false;
     }
 
     unpress() {
@@ -43,6 +52,11 @@ class Keyboard {
         this.keys = keys;
         this.scale = scale || 1;
         this.keysPressed = 0;
+        if (coloredKeyboards) {
+            this.color = getRandomColor();
+        } else {
+            this.color = [65, 65, 65];
+        }
     }
 
     rowWidth(r) {
@@ -82,7 +96,7 @@ class Keyboard {
         let width = this.calcWidth();
         let height = this.calcHeight();
 
-        ctx.fillStyle = "#555555";
+        ctx.fillStyle = colorStr(this.color);
         ctx.fillRect(0, 0, width*this.scale/5, height*this.scale/5);
 
         let curX = 1, curY = 1;
@@ -90,7 +104,7 @@ class Keyboard {
             curX = 1;
             for (let key of row) {
                 ctx.translate(curX*this.scale/5, curY*this.scale/5);
-                key.draw(ctx, this.scale);
+                key.draw(ctx, this.scale, colorStr(this.color.map(v => v/2)));
                 ctx.translate(-curX*this.scale/5, -curY*this.scale/5);
                 curX += key.width+1;
             }
@@ -109,7 +123,7 @@ class Keyboard {
                         spawnRandomParticle(0.5, midPt, Math.random()*100+100);
                     }
                     addShake(5, 0.2, true);
-                    this.keysPressed++;
+                    if (!indestructible) this.keysPressed++;
                 }
             });
         });
@@ -139,6 +153,7 @@ class Keyboard {
         }
         let kboard = new Keyboard(nkeys, this.scale);
         kboard.keysPressed = this.keysPressed;
+        kboard.color = this.color;
         return kboard;
     }
 }
@@ -146,6 +161,7 @@ class Keyboard {
 class SplitKeyboard extends Keyboard {
     constructor(kboard) {
         super(kboard.keys, kboard.scale);
+        this.color = kboard.color;
         this.lpos = [0, 0];
         this.rpos = [this.calcWidth()*this.scale/10, 0];
         this.lvel = [Math.random()*-MAX_VEL, 0];

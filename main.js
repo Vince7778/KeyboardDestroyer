@@ -17,10 +17,13 @@ const ctx = canvas.getContext("2d");
 
 let frameCount = 0;
 let lastTime = new Date();
+let lastExplode = new Date();
 let activeKeyboard;
 let splitKeyboards = [];
 let scale = 60/1500*canvas.width;
 let numBroken = 0;
+let fastestTime = 1e99;
+let indestructible = false;
 
 function draw() {
     frameCount++;
@@ -35,13 +38,18 @@ function draw() {
     if (activeKeyboard.canSplit()) {
         splitKeyboards.push(new SplitKeyboard(activeKeyboard.copy()));
         activeKeyboard = qwerty.copy();
+        if (coloredKeyboards) activeKeyboard.color = getRandomColor();
         activeKeyboard.reset();
         addShake(15*scale/30, 1.5, true);
-        for (let p = 0; p < 5; p++) {
-            spawnRandomParticle(2+Math.random(), [activeKeyboard.calcWidth()*scale/10, activeKeyboard.calcHeight()*scale/10], Math.random()*300+300);
+        for (let p = 0; p < 25; p++) {
+            spawnRandomParticle(1+Math.random(), [activeKeyboard.calcWidth()*scale/10, activeKeyboard.calcHeight()*scale/10], Math.random()*300+300);
         }
         numBroken++;
         el("broken").innerText = numBroken;
+        fastestTime = Math.min(fastestTime, curTime-lastExplode);
+        el("fastTime").innerText = (fastestTime/1000).toFixed(3);
+        el("lastTime").innerText = ((curTime-lastExplode)/1000).toFixed(3);
+        lastExplode = curTime;
     }
 
     tickShake(dt);
@@ -61,6 +69,8 @@ function draw() {
 
     ctx.translate(...shake.map(v => -v));
     
+    el("timer").innerText = ((curTime - lastExplode)/1000).toFixed(3);
+
     window.requestAnimationFrame(draw);
 }
 
